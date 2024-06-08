@@ -1,0 +1,16 @@
+<!-- views/partials/userList.ejs -->
+<div class="flex w-[55%] flex-col">
+    <% if(users && users.length > 0) { %> 
+        <% users.forEach(function(user) { %>
+            <a href="/userDetails/<%= user._id %>">
+                <div class="user px-8 rounded-lg bg-gray-800 p-2 mt-3 gap-3 flex">
+                    <h3 class="text-xl tracking-tighter"><%= user.firstname %> <%= user.lastname %></h3>
+                    <h3 class="text-xl tracking-tighter"><%= user.email %></h3>
+                    <h3 class="text-xl tracking-tighter"><%= user._id %></h3>
+                </div>
+            </a>
+        <% }) %>
+    <% } else { %>
+        <h3 class="text-3xl text-zinc-600 m-auto pt-48">No users yet</h3>
+    <% } %> 
+</div>

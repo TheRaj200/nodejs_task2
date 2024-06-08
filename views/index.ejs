@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function validateForm() {
+            const mobileNumber = document.forms["userForm"]["number"].value;
+            const login = document.forms["userForm"]["LogIN"].value;
+            const password = document.forms["userForm"]["password"].value;
+            const mobilePattern = /^\d{10}$/;
+            const loginPattern = /^[a-zA-Z0-9]{8,}$/;
+            const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+            let isValid = true;
+
+            if (!mobilePattern.test(mobileNumber)) {
+                document.getElementById('mobileError').innerText = "Mobile number must be exactly 10 digits.";
+                isValid = false;
+            } else {
+                document.getElementById('mobileError').innerText = "";
+            }
+
+            if (!loginPattern.test(login)) {
+                document.getElementById('loginError').innerText = "Login must be at least 8 alphanumeric characters.";
+                isValid = false;
+            } else {
+                document.getElementById('loginError').innerText = "";
+            }
+
+            if (!passwordPattern.test(password)) {
+                document.getElementById('passwordError').innerText = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+                isValid = false;
+            } else {
+                document.getElementById('passwordError').innerText = "";
+            }
+
+            return isValid;
+        }
+    </script>
+</head>
+<body>
+    <div class="w-full min-h-screen bg-zinc-900 text-white p-10">
+        <form name="userForm" class="flex flex-col gap-2 w-full justify-center items-center" action="/create" method="post" onsubmit="return validateForm()">
+            <h3 class="text-3xl mb-3">User Form</h3>
+            <input class="px-3 py-2 w-80 rounded-md bg-transparent border-2 border-zinc-800 outline-none" type="text" placeholder="First Name" name="firstname" required>
+            <input class="px-3 py-2 w-80 rounded-md bg-transparent border-2 border-zinc-800 outline-none" type="text" placeholder="Last Name" name="lastname" required>
+            <input class="px-3 py-2 w-80 rounded-md bg-transparent border-2 border-zinc-800 outline-none" type="number" placeholder="Mobile Number" name="number" required>
+            <span id="mobileError" class="text-red-500"></span>
+            <input class="px-3 py-2 w-80 rounded-md bg-transparent border-2 border-zinc-800 outline-none" type="email" placeholder="Email id" name="email" required>
+            <h3>Address</h3>
+            <input class="px-3 py-2 w-80 rounded-md bg-transparent border-2 border-zinc-800 outline-none" type="text" placeholder="Street" name="Street" required>
+            <input class="px-3 py-2 w-80 rounded-md bg-transparent border-2 border-zinc-800 outline-none" type="text" placeholder="City" name="City" required>
+            <input class="px-3 py-2 w-80 rounded-md bg-transparent border-2 border-zinc-800 outline-none" type="text" placeholder="State" name="State" required>
+            <input class="px-3 py-2 w-80 rounded-md bg-transparent border-2 border-zinc-800 outline-none" type="text" placeholder="Country" name="Country" required>
+            <h3>Create Id and Password</h3>
+            <input class="px-3 py-2 w-80 rounded-md bg-transparent border-2 border-zinc-800 outline-none" type="text" placeholder="LogIN" name="LogIN" required>
+            <span id="loginError" class="text-red-500"></span> 
+            <input class="px-3 py-2 w-80 rounded-md bg-transparent border-2 border-zinc-800 outline-none" type="password" placeholder="password" name="password" required>
+            <span id="passwordError" class="text-red-500"></span>
+            <input type="text" name="date_time" class="hidden text-xl w-1/6 mt-3 tracking-tighter" value="<% let date_time = new Date(); %> Current Date and Time: <%= date_time.toLocaleString() %>">
+            <input class="px-5 py-2 rounded-md bg-blue-500" type="submit" value="Submit">
+            <a href="/read" class="px-5 py-2 rounded-md bg-yellow-500 text-black" >View Save Data</a>
+            <a href="/live" class="px-5 py-2 rounded-md bg-green-500 text-black">Join live room</a>
+        </form>
+    </div>
+</body>
+</html>

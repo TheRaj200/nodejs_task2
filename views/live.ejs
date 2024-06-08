@@ -1,0 +1,38 @@
+<!-- views/live.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Users</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="w-[100%] min-h-screen bg-zinc-900 text-white p-10">
+        <a class="text-blue-600" href="/">Back to home</a>
+        <h1 class="text-3xl tracking-tighter mt-3 mb-3">Live Users</h1>
+        <div class="flex gap-4">
+            <%- include('partials/userList', { users: users }) %>
+            <%- include('partials/userDetails', { user: user }) %>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const socket = io();
+
+            socket.on("connect", () => {
+                console.log("Connected to server with ID:", socket.id);
+            });
+
+            socket.on("disconnect", () => {
+                socket.id = null;
+                console.log(socket.id);
+            });
+        });
+
+        function viewUserDetails(userId) {
+            window.location.href = `/userDetails/${userId}`;
+        }
+    </script>
+</body>
+</html>
