@@ -17,6 +17,10 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+app.get("/read", async (req,res)=>{
+    let users = await userModel.find();
+    res.render("read",{users});
+})
 app.get('/live', async (req, res) => {
     try {
         const users = await userModel.find();
@@ -38,12 +42,14 @@ app.get('/userDetails/:id', async (req, res) => {
     }
 });
 
+
 app.post('/create', async (req, res) => {
     try {
+        let date_time = new Date();
         const { firstname, lastname, email, number, City, LogIN, Country, street } = req.body;
-        const createdUser = await userModel.create({ firstname, lastname, email, number, City, LogIN, Country, street });
+        const createdUser = await userModel.create({ firstname, lastname, email, number, City, LogIN, Country, street, date_time });
         io.emit('userCreated', createdUser);
-        res.redirect('/live');
+  
     } catch (error) {
         console.error('Error creating user:', error);
         res.status(500).send('Internal Server Error');
